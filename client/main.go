@@ -1,6 +1,7 @@
 package main
 
 import (
+	"C"
 	"crypto/sha1"
 	"fmt"
 	"io"
@@ -285,7 +286,8 @@ func main() {
 		}
 
 		opts, err := parseEnv()
-		if err != nil {
+		if err == nil {
+			fmt.Printf("test")
 			if c, b := opts.Get("localaddr"); b {
 				config.LocalAddr = c
 			}
