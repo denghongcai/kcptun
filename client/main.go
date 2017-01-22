@@ -245,6 +245,14 @@ func main() {
 			Value: "", // when the value is not empty, the config path must exists
 			Usage: "config from json file, which will override the command from shell",
 		},
+		cli.BoolFlag{
+			Name:  "fast-open",
+			Usage: "Dummy flag, doesn't really do anything",
+		},
+		cli.BoolFlag{
+			Name:  "V",
+			Usage: "Enable VPN mode for shadowsocks-android",
+		},
 	}
 	myApp.Action = func(c *cli.Context) error {
 		config := Config{}
