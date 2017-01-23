@@ -286,7 +286,11 @@ func main() {
 		config.SnmpLog = c.String("snmplog")
 		config.SnmpPeriod = c.Int("snmpperiod")
 		config.Quiet = c.Bool("quiet")
+<<<<<<< HEAD
 		config.TCP = c.Bool("tcp")
+=======
+		config.Vpn = c.Bool("V")
+>>>>>>> Refine VPN flag
 
 		if c.String("c") != "" {
 			err := parseJSONConfig(&config, c.String("c"))
@@ -410,6 +414,11 @@ func main() {
 			if c, b := opts.Get("quiet"); b {
 				if quiet, err := strconv.ParseBool(c); err == nil {
 					config.Quiet = quiet
+				}
+			}
+			if c, b := opts.Get("V"); b {
+				if vpn, err := strconv.ParseBool(c); err == nil {
+					config.Vpn = vpn
 				}
 			}
 		}
