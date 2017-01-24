@@ -506,6 +506,7 @@ func main() {
 		if config.Pprof {
 			go http.ListenAndServe(":6060", nil)
 		}
+		go parentMonitor(3)
 
 		// main loop
 		var wg sync.WaitGroup
@@ -562,4 +563,19 @@ func main() {
 		return nil
 	}
 	myApp.Run(os.Args)
+}
+
+func parentMonitor(interval int) {
+	ticker := time.NewTicker(time.Duration(interval) * time.Second)
+	defer ticker.Stop()
+	pid := os.Getppid()
+	for {
+		select {
+		case <-ticker.C:
+			curpid := os.Getppid()
+			if curpid != pid {
+				os.Exit(1)
+			}
+		}
+	}
 }

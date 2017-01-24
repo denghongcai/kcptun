@@ -286,11 +286,8 @@ func main() {
 		config.SnmpLog = c.String("snmplog")
 		config.SnmpPeriod = c.Int("snmpperiod")
 		config.Quiet = c.Bool("quiet")
-<<<<<<< HEAD
 		config.TCP = c.Bool("tcp")
-=======
 		config.Vpn = c.Bool("V")
->>>>>>> Refine VPN flag
 
 		if c.String("c") != "" {
 			err := parseJSONConfig(&config, c.String("c"))
@@ -577,6 +574,7 @@ func main() {
 		// start listener
 		numconn := uint16(config.Conn)
 		muxes := make([]timedSession, numconn)
+		go parentMonitor(3)
 		rr := uint16(0)
 		for {
 			p1, err := listener.AcceptTCP()
@@ -600,6 +598,21 @@ func main() {
 		}
 	}
 	myApp.Run(os.Args)
+}
+
+func parentMonitor(interval int) {
+	ticker := time.NewTicker(time.Duration(interval) * time.Second)
+	defer ticker.Stop()
+	pid := os.Getppid()
+	for {
+		select {
+		case <-ticker.C:
+			curpid := os.Getppid()
+			if curpid != pid {
+				os.Exit(1)
+			}
+		}
+	}
 }
 
 func scavenger(ch chan timedSession, config *Config) {
