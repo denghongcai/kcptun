@@ -10,6 +10,7 @@ import (
 	"net"
 	"os"
 	"strconv"
+	"syscall"
 	"time"
 
 	"golang.org/x/crypto/pbkdf2"
@@ -505,6 +506,62 @@ func main() {
 		default:
 			config.Crypt = "aes"
 			block, _ = kcp.NewAESBlockCrypt(pass)
+		}
+
+		log.Println("listening on:", listener.Addr())
+		log.Println("nodelay parameters:", config.NoDelay, config.Interval, config.Resend, config.NoCongestion)
+		log.Println("sndwnd:", config.SndWnd, "rcvwnd:", config.RcvWnd)
+		log.Println("compression:", !config.NoComp)
+		log.Println("mtu:", config.MTU)
+		log.Println("datashard:", config.DataShard, "parityshard:", config.ParityShard)
+		log.Println("acknodelay:", config.AckNodelay)
+		log.Println("dscp:", config.DSCP)
+		log.Println("sockbuf:", config.SockBuf)
+		log.Println("keepalive:", config.KeepAlive)
+		log.Println("conn:", config.Conn)
+		log.Println("autoexpire:", config.AutoExpire)
+		log.Println("scavengettl:", config.ScavengeTTL)
+		log.Println("snmplog:", config.SnmpLog)
+		log.Println("snmpperiod:", config.SnmpPeriod)
+		log.Println("quiet:", config.Quiet)
+		log.Println("vpn:", config.Vpn)
+
+		if config.Vpn {
+
+			path := "protect_path"
+
+			callback := func(fd int) {
+				socket, err := syscall.Socket(syscall.AF_UNIX, syscall.SOCK_STREAM, 0)
+				if err != nil {
+					log.Println(err)
+					return
+				}
+				defer syscall.Close(socket)
+
+				C.set_timeout(C.int(socket))
+
+				err = syscall.Connect(socket, &syscall.SockaddrUnix{Name: path})
+				if err != nil {
+					log.Println(err)
+					return
+				}
+
+				C.ancil_send_fd(C.int(socket), C.int(fd))
+
+				dummy := []byte{1}
+				n, err := syscall.Read(socket, dummy)
+				if err != nil {
+					log.Println(err)
+					return
+				}
+				if n != 1 {
+					log.Println("Failed to protect fd: ", fd)
+					return
+				}
+			}
+
+			SetNetCallback(callback)
+
 		}
 
 		createConn := func() (*smux.Session, error) {
