@@ -524,10 +524,6 @@ func main() {
 		log.Println("quiet:", config.Quiet)
 		log.Println("vpn:", config.Vpn)
 
-		if config.Vpn {
-			SetNetCallback()
-		}
-
 		createConn := func() (*smux.Session, error) {
 			kcpconn, err := dial(&config, block)
 			if err != nil {
