@@ -22,7 +22,7 @@
 
 **kcp-go** is a **Production-Grade Reliable-UDP** library for [golang](https://golang.org/). 
 
-This library intents to provide a **smooth, resilient, ordered, error-checked and anonymous** delivery of streams over **UDP** packets, it has been battle-tested with opensource project [kcptun](https://github.com/xtaci/kcptun). Millions of devices(from low-end MIPS routers to high-end servers) have deployed **kcp-go** powered program in a variety of forms like **online games, live broadcasting, file synchronization and network acceleration**.
+This library intents to provide a **smooth, resilient, ordered, error-checked and anonymous** delivery of streams over **UDP** packets, it has been battle-tested with opensource project [kcptun](https://github.com/denghongcai/kcptun). Millions of devices(from low-end MIPS routers to high-end servers) have deployed **kcp-go** powered program in a variety of forms like **online games, live broadcasting, file synchronization and network acceleration**.
 
 [Lastest Release](https://github.com/xtaci/kcp-go/releases)
 
@@ -89,8 +89,8 @@ SIZE:
 ## Examples
 
 1. [simple examples](https://github.com/xtaci/kcp-go/tree/master/examples)
-2. [kcptun client](https://github.com/xtaci/kcptun/blob/master/client/main.go)
-3. [kcptun server](https://github.com/xtaci/kcptun/blob/master/server/main.go)
+2. [kcptun client](https://github.com/denghongcai/kcptun/blob/master/client/main.go)
+3. [kcptun server](https://github.com/denghongcai/kcptun/blob/master/server/main.go)
 
 ## Benchmark
 ```
@@ -247,7 +247,7 @@ Other possible attacks to kcp-go includes: a) [traffic analysis](https://en.wiki
 
 ## Connection Termination
 
-Control messages like **SYN/FIN/RST** in TCP **are not defined** in KCP, you need some **keepalive/heartbeat mechanism** in the application-level. A real world example is to use some **multiplexing** protocol over session, such as [smux](https://github.com/xtaci/smux)(with embedded keepalive mechanism), see [kcptun](https://github.com/xtaci/kcptun) for example.
+Control messages like **SYN/FIN/RST** in TCP **are not defined** in KCP, you need some **keepalive/heartbeat mechanism** in the application-level. A real world example is to use some **multiplexing** protocol over session, such as [smux](https://github.com/xtaci/smux)(with embedded keepalive mechanism), see [kcptun](https://github.com/denghongcai/kcptun) for example.
 
 ## FAQ
 
@@ -265,7 +265,7 @@ A: Yes, for the safety of protocol, even if the upper layer has encrypted.
 
 ## Who is using this?
 
-1. https://github.com/xtaci/kcptun -- A Secure Tunnel Based On KCP over UDP.
+1. https://github.com/denghongcai/kcptun -- A Secure Tunnel Based On KCP over UDP.
 2. https://github.com/getlantern/lantern -- Lantern delivers fast access to the open Internet. 
 3. https://github.com/smallnest/rpcx -- A RPC service framework based on net/rpc like alibaba Dubbo and weibo Motan.
 4. https://github.com/gonet2/agent -- A gateway for games with stream multiplexing.

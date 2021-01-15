@@ -13,10 +13,10 @@ import (
 
 	"golang.org/x/crypto/pbkdf2"
 
+	"github.com/denghongcai/kcptun/generic"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli"
 	kcp "github.com/xtaci/kcp-go/v5"
-	"github.com/xtaci/kcptun/generic"
 	"github.com/xtaci/smux"
 )
 
@@ -29,15 +29,18 @@ const (
 	bufSize = 4096
 )
 
+// VpnMode is option for android
+var VpnMode = false
+
 // VERSION is injected by buildflags
 var VERSION = "SELFBUILD"
 
 // handleClient aggregates connection p1 on mux with 'writeLock'
 func handleClient(session *smux.Session, p1 net.Conn, quiet bool) {
 	logln := func(v ...interface{}) {
-		if !quiet {
-			log.Println(v...)
-		}
+		// if !quiet {
+		// 	log.Println(v...)
+		// }
 	}
 	defer p1.Close()
 	p2, err := session.OpenStream()
@@ -102,9 +105,10 @@ func main() {
 			Usage: "kcp server address",
 		},
 		&cli.StringFlag{
-			Name:  "key",
-			Value: "it's a secrect",
-			Usage: "pre-shared secret between client and server",
+			Name:   "key",
+			Value:  "it's a secrect",
+			Usage:  "pre-shared secret between client and server",
+			EnvVar: "KCPTUN_KEY",
 		},
 		&cli.StringFlag{
 			Name:  "crypt",
@@ -435,6 +439,8 @@ func main() {
 			config.NoDelay, config.Interval, config.Resend, config.NoCongestion = 1, 10, 2, 1
 		}
 
+		log_init()
+
 		log.Println("version:", VERSION)
 		addr, err := net.ResolveTCPAddr("tcp", config.LocalAddr)
 		checkError(err)
@@ -520,6 +526,8 @@ func main() {
 		log.Println("snmpperiod:", config.SnmpPeriod)
 		log.Println("quiet:", config.Quiet)
 		log.Println("vpn:", config.Vpn)
+
+		VpnMode = config.Vpn
 
 		createConn := func() (*smux.Session, error) {
 			kcpconn, err := dial(&config, block)

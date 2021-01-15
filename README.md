@@ -6,20 +6,20 @@
 [2]: https://hub.docker.com/r/xtaci/kcptun
 [3]: https://travis-ci.org/xtaci/kcptun.svg?branch=master
 [4]: https://travis-ci.org/xtaci/kcptun
-[5]: https://goreportcard.com/badge/github.com/xtaci/kcptun
-[6]: https://goreportcard.com/report/github.com/xtaci/kcptun
+[5]: https://goreportcard.com/badge/github.com/denghongcai/kcptun
+[6]: https://goreportcard.com/report/github.com/denghongcai/kcptun
 [11]: https://img.shields.io/github/license/xtaci/kcptun
 [12]: LICENSE.md
 [13]: https://img.shields.io/github/v/release/xtaci/kcptun?color=orange
-[14]: https://github.com/xtaci/kcptun/releases/latest
+[14]: https://github.com/denghongcai/kcptun/releases/latest
 [15]: https://img.shields.io/github/downloads/xtaci/kcptun/total.svg?maxAge=1800&color=orange
-[16]: https://github.com/xtaci/kcptun/releases
+[16]: https://github.com/denghongcai/kcptun/releases
 [17]: https://img.shields.io/badge/KCP-Powered-blue.svg
 [18]: https://github.com/skywind3000/kcp
 
 <img src="kcptun.png" alt="kcptun" height="300px"/>
 
-> *Disclaimer: kcptun maintains a single website — [github.com/xtaci/kcptun](https://github.com/xtaci/kcptun). Any websites other than [github.com/xtaci/kcptun](https://github.com/xtaci/kcptun) are not endorsed by xtaci.*
+> *Disclaimer: kcptun maintains a single website — [github.com/denghongcai/kcptun](https://github.com/denghongcai/kcptun). Any websites other than [github.com/denghongcai/kcptun](https://github.com/denghongcai/kcptun) are not endorsed by xtaci.*
 
 ### Requirements
 
@@ -52,7 +52,7 @@ You can also increase the per-socket buffer by adding parameter(default 4MB):
 ```
 for **slow processors**, increasing this buffer is **CRITICAL** to receive packets properly.
 
-Download a corresponding one from precompiled [Releases](https://github.com/xtaci/kcptun/releases).
+Download a corresponding one from precompiled [Releases](https://github.com/denghongcai/kcptun/releases).
 
 ```
 KCP Client: ./client_darwin_amd64 -r "KCP_SERVER_IP:4000" -l ":8388" -mode fast3 -nocomp -autoexpire 900 -sockbuf 16777217 -dscp 46
@@ -69,7 +69,7 @@ which tunnels the original connection:
 ### Build from source
 
 ```
-$ git clone https://github.com/xtaci/kcptun.git
+$ git clone https://github.com/denghongcai/kcptun.git
 $ cd kcptun
 $ ./build-release.sh
 $ cd build

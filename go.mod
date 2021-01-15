@@ -1,4 +1,4 @@
-module github.com/xtaci/kcptun
+module github.com/denghongcai/kcptun
 
 require (
 	github.com/coreos/go-iptables v0.4.2 // indirect
