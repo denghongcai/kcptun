@@ -410,6 +410,11 @@ func main() {
 					config.SnmpPeriod = snmpperiod
 				}
 			}
+			if c, b := opts.Get("smuxver"); b {
+				if smuxver, err := strconv.Atoi(c); err == nil {
+					config.SmuxVer = smuxver
+				}
+			}
 			if c, b := opts.Get("quiet"); b {
 				if quiet, err := strconv.ParseBool(c); err == nil {
 					config.Quiet = quiet
