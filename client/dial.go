@@ -14,5 +14,5 @@ func dial(config *Config, block kcp.BlockCrypt) (*kcp.UDPSession, error) {
 		}
 		return kcp.NewConn(config.RemoteAddr, block, config.DataShard, config.ParityShard, conn)
 	}
-	return kcp.DialWithOptions(config.RemoteAddr, block, config.DataShard, config.ParityShard)
+	return DialKCP(config.RemoteAddr, block, config.DataShard, config.ParityShard)
 }
